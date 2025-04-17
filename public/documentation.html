@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise B2B Design System Documentation</title>
+    <style>
+        @page {
+            size: letter;
+            margin: 1in;
+        }
+        body {
+            font-family: 'Calibri', 'Arial', sans-serif;
+            font-size: 11pt;
+            line-height: 1.5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .cover-page {
+            padding: 2cm 1cm;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .cover-title {
+            font-size: 36pt;
+            font-weight: bold;
+            color: #1890ff;
+            margin-bottom: 0.5cm;
+        }
+        .cover-subtitle {
+            font-size: 18pt;
+            color: #333;
+            margin-bottom: 2cm;
+        }
+        .cover-image {
+            max-width: 60%;
+            margin-bottom: 2cm;
+        }
+        .cover-footer {
+            font-size: 14pt;
+            color: #666;
+            margin-top: 2cm;
+        }
+        h1 {
+            font-size: 18pt;
+            color: #1890ff;
+            border-bottom: 1px solid #1890ff;
+            padding-bottom: 0.3cm;
+        }
+        h2 {
+            font-size: 14pt;
+            color: #333;
+            margin-top: 1cm;
+        }
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 0.8cm;
+        }
+        p {
+            text-align: justify;
+            margin: 0.5cm 0;
+        }
+        ul, ol {
+            margin: 0.5cm 0;
+            padding-left: 0.8cm;
+        }
+        li {
+            margin-bottom: 0.3cm;
+        }
+        .code-block {
+            background-color: #f5f5f5;
+            padding: 0.5cm;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 10pt;
+            overflow-x: auto;
+            margin: 0.5cm 0;
+            white-space: pre-wrap;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.8cm 0;
+        }
+        th {
+            background-color: #f0f0f0;
+            padding: 0.3cm;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        td {
+            padding: 0.3cm;
+            border: 1px solid #ddd;
+        }
+        .color-sample {
+            display: inline-block;
+            width: 1cm;
+            height: 1cm;
+            margin-right: 0.3cm;
+            vertical-align: middle;
+            border-radius: 2px;
+            border: 1px solid #ddd;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        .header {
+            position: fixed;
+            top: 0.5cm;
+            right: 0.5cm;
+            font-size: 9pt;
+            color: #999;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0.5cm;
+            width: 100%;
+            text-align: center;
+            font-size: 9pt;
+            color: #999;
+        }
+        .toc {
+            margin: 1cm 0;
+        }
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.2cm;
+        }
+        .toc-item.level-1 {
+            font-weight: bold;
+        }
+        .toc-item.level-2 {
+            margin-left: 0.5cm;
+        }
+        .toc-item.level-3 {
+            margin-left: 1cm;
+            font-size: 10pt;
+        }
+        .toc-dots {
+            flex-grow: 1;
+            margin: 0 0.3cm;
+            border-bottom: 1px dotted #999;
+            height: 0.6cm;
+        }
+        .note-box {
+            background-color: #e6f7ff;
+            border-left: 4px solid #1890ff;
+            padding: 0.5cm;
+            margin: 0.8cm 0;
+        }
+        .warning-box {
+            background-color: #fff2e8;
+            border-left: 4px solid #fa541c;
+            padding: 0.5cm;
+            margin: 0.8cm 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Cover Page -->
+    <div class="cover-page">
+        <div class="cover-title">Enterprise B2B Design System</div>
+        <div class="cover-subtitle">Technical Documentation</div>
+        <img class="cover-image" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjZmNmY2Ii8+PGNpcmNsZSBjeD0iMjUwIiBjeT0iMTUwIiByPSI4MCIgZmlsbD0iIzE4OTBmZiIgLz48cmVjdCB4PSIxODAiIHk9IjE0MCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSIyMCIgZmlsbD0iI2ZmZiIgLz48cmVjdCB4PSIyNDAiIHk9IjgwIiB3aWR0aD0iMjAiIGhlaWdodD0iMTQwIiBmaWxsPSIjZmZmIiAvPjx0ZXh0IHg9IjI1MCIgeT0iMjUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiMzMzMiPkVudGVycHJpc2UgQjJCIERlc2lnbiBTeXN0ZW08L3RleHQ+PC9zdmc+" alt="Design System Logo">
+        <div class="cover-footer">
+            Version 1.0.0<br>
+            Updated: April 2024
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- Table of Contents -->
+    <h1>Table of Contents</h1>
+    <div class="toc">
+        <div class="toc-item level-1">
+            <span>1. Introduction</span>
+            <span class="toc-dots"></span>
+            <span>3</span>
+        </div>
+        <div class="toc-item level-2">
+            <span>1.1 Overview</span>
+            <span class="toc-dots"></span>
+            <span>3</span>
+        </div>
+        <div class="toc-item level-2">
+            <span>1.2 Getting Started</span>
+            <span class="toc-dots"></span>
+            <span>3</span>
+        </div>
+        <div class="toc-item level-1">
+            <span>2. Color System</span>
+            <span class="toc-dots"></span>
+            <span>4</span>
+        </div>
+        <div class="toc-item level-2">
+            <span>2.1 Primary Colors</span>
+            <span class="toc-dots"></span>
+            <span>4</span>
+        </div>
+        <div class="toc-item level-2">
+            <span>2.2 Secondary Colors</span>
+            <span class="toc-dots"></span>
+            <span>5</span>
+        </div>
+        <div class="toc-item level-2">
+            <span>2.3 Tertiary Colors</span>
+            <span class="toc-dots"></span>
+            <span>5</span>
+        </div>
+        <div class="toc-item level-2">
+            <span>2.4 Semantic Colors</span>
+            <span class="toc-dots"></span>
+            <span>6</span>
+        </div>
+        <div class="toc-item level-1">
+            <span>3. Components</span>
+            <span class="toc-dots"></span>
+            <span>7</span>
+        </div>
+        <div class="toc-item level-2">
+            <span>3.1 Data Display Components</span>
+            <span class="toc-dots"></span>
+            <span>7</span>
+        </div>
+        <div class="toc-item level-3">
+            <span>3.1.1 Accordion</span>
+            <span class="toc-dots"></span>
+            <span>7</span>
+        </div>
+        <div class="toc-item level-3">
+            <span>3.1.2 Badge</span>
+            <span class="toc-dots"></span>
+            <span>8</span>
+        </div>
+        <div class="toc-item level-2">
+            <span>3.2 Navigation Components</span>
+            <span class="toc-dots"></span>
+            <span>9</span>
+        </div>
+        <div class="toc-item level-3">
+            <span>3.2.1 Breadcrumbs</span>
+            <span class="toc-dots"></span>
+            <span>9</span>
+        </div>
+        <div class="toc-item level-3">
+            <span>3.2.2 Tabs</span>
+            <span class="toc-dots"></span>
+            <span>10</span>
+        </div>
+        <div class="toc-item level-2">
+            <span>3.3 UI Components</span>
+            <span class="toc-dots"></span>
+            <span>11</span>
+        </div>
+        <div class="toc-item level-3">
+            <span>3.3.1 Button</span>
+            <span class="toc-dots"></span>
+            <span>11</span>
+        </div>
+        <div class="toc-item level-3">
+            <span>3.3.2 ThemeToggle</span>
+            <span class="toc-dots"></span>
+            <span>12</span>
+        </div>
+        <div class="toc-item level-1">
+            <span>4. Theming</span>
+            <span class="toc-dots"></span>
+            <span>13</span>
+        </div>
+        <div class="toc-item level-1">
+            <span>5. Accessibility</span>
+            <span class="toc-dots"></span>
+            <span>14</span>
+        </div>
+        <div class="toc-item level-1">
+            <span>6. Best Practices</span>
+            <span class="toc-dots"></span>
+            <span>15</span>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- Introduction -->
+    <h1>1. Introduction</h1>
+    <h2>1.1 Overview</h2>
+    <p>This documentation provides a comprehensive guide to using our Enterprise B2B Design System, built with React, TypeScript, TailwindCSS, and Storybook. The system is designed to provide a consistent, accessible, and customizable set of components for enterprise B2B applications.</p>
+    
+    <div class="note-box">
+        <strong>Note:</strong> This design system follows industry best practices and provides full support for both light and dark themes.
+    </div>
+    
+    <h2>1.2 Getting Started</h2>
+    <h3>Installation</h3>
+    <div class="code-block">
+# Clone the repository
+git clone https://github.com/yourusername/my-project.git
+cd my-project
+
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+
+# Launch Storybook
+npm run storybook</div>
+
+    <h3>Basic Usage</h3>
+    <p>Import components in your React application:</p>
+    <div class="code-block">
+import { Button, Accordion, Badge } from 'my-project';
+
+function MyComponent() {
+  return (
+    <div>
+      <Button variant="primary">Click me</Button>
+      
+      <Badge variant="success">New</Badge>
+      
+      <Accordion 
+        items={[
+          { id: '1', title: 'Section 1', content: 'Content for section 1' },
+          { id: '2', title: 'Section 2', content: 'Content for section 2' }
+        ]} 
+      />
+    </div>
+  );
+}</div>
+
+    <div class="page-break"></div>
+
+    <!-- Color System -->
+    <h1>2. Color System</h1>
+    <p>Our color system is built on a token-based approach that supports both light and dark themes through CSS variables.</p>
+    
+    <h2>2.1 Primary Colors</h2>
+    <p>The primary color palette is used for main actions, buttons, and key UI elements.</p>
+    
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Light Mode</th>
+            <th>Dark Mode</th>
+            <th>Usage</th>
+        </tr>
+        <tr>
+            <td>Primary-50</td>
+            <td><div class="color-sample" style="background-color: #e6f7ff;"></div> #e6f7ff</td>
+            <td><div class="color-sample" style="background-color: #003566;"></div> #003566</td>
+            <td>Backgrounds, borders</td>
+        </tr>
+        <tr>
+            <td>Primary-500</td>
+            <td><div class="color-sample" style="background-color: #1890ff;"></div> #1890ff</td>
+            <td><div class="color-sample" style="background-color: #1890ff;"></div> #1890ff</td>
+            <td>Main brand color, buttons</td>
+        </tr>
+        <tr>
+            <td>Primary-900</td>
+            <td><div class="color-sample" style="background-color: #002766;"></div> #002766</td>
+            <td><div class="color-sample" style="background-color: #bae7ff;"></div> #bae7ff</td>
+            <td>Text, hover states</td>
+        </tr>
+    </table>
+    
+    <h2>2.2 Secondary Colors</h2>
+    <p>The secondary color palette is used for supporting elements, highlights, and secondary actions.</p>
+    
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Light Mode</th>
+            <th>Dark Mode</th>
+            <th>Usage</th>
+        </tr>
+        <tr>
+            <td>Secondary-50</td>
+            <td><div class="color-sample" style="background-color: #f6ffed;"></div> #f6ffed</td>
+            <td><div class="color-sample" style="background-color: #243503;"></div> #243503</td>
+            <td>Backgrounds, borders</td>
+        </tr>
+        <tr>
+            <td>Secondary-500</td>
+            <td><div class="color-sample" style="background-color: #52c41a;"></div> #52c41a</td>
+            <td><div class="color-sample" style="background-color: #52c41a;"></div> #52c41a</td>
+            <td>Secondary actions, highlights</td>
+        </tr>
+        <tr>
+            <td>Secondary-900</td>
+            <td><div class="color-sample" style="background-color: #092b00;"></div> #092b00</td>
+            <td><div class="color-sample" style="background-color: #d9f7be;"></div> #d9f7be</td>
+            <td>Text, hover states</td>
+        </tr>
+    </table>
+
+    <h2>2.3 Tertiary Colors</h2>
+    <p>The tertiary color palette is used for accents and less prominent UI elements.</p>
+    
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Light Mode</th>
+            <th>Dark Mode</th>
+            <th>Usage</th>
+        </tr>
+        <tr>
+            <td>Tertiary-50</td>
+            <td><div class="color-sample" style="background-color: #fff2e8;"></div> #fff2e8</td>
+            <td><div class="color-sample" style="background-color: #4f1508;"></div> #4f1508</td>
+            <td>Backgrounds, borders</td>
+        </tr>
+        <tr>
+            <td>Tertiary-500</td>
+            <td><div class="color-sample" style="background-color: #fa541c;"></div> #fa541c</td>
+            <td><div class="color-sample" style="background-color: #fa541c;"></div> #fa541c</td>
+            <td>Accent elements, badges</td>
+        </tr>
+        <tr>
+            <td>Tertiary-900</td>
+            <td><div class="color-sample" style="background-color: #610b00;"></div> #610b00</td>
+            <td><div class="color-sample" style="background-color: #ffd8bf;"></div> #ffd8bf</td>
+            <td>Text, hover states</td>
+        </tr>
+    </table>
+
+    <div class="page-break"></div>
+
+    <h2>2.4 Semantic Colors</h2>
+    <p>Semantic colors convey meaning and are used consistently across the application.</p>
+    
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Light Mode</th>
+            <th>Dark Mode</th>
+            <th>Usage</th>
+        </tr>
+        <tr>
+            <td>Success</td>
+            <td><div class="color-sample" style="background-color: #52c41a;"></div> #52c41a</td>
+            <td><div class="color-sample" style="background-color: #52c41a;"></div> #52c41a</td>
+            <td>Successful actions, completions</td>
+        </tr>
+        <tr>
+            <td>Info</td>
+            <td><div class="color-sample" style="background-color: #1890ff;"></div> #1890ff</td>
+            <td><div class="color-sample" style="background-color: #1890ff;"></div> #1890ff</td>
+            <td>Informational messages</td>
+        </tr>
+        <tr>
+            <td>Warning</td>
+            <td><div class="color-sample" style="background-color: #faad14;"></div> #faad14</td>
+            <td><div class="color-sample" style="background-color: #faad14;"></div> #faad14</td>
+            <td>Warnings, cautions</td>
+        </tr>
+        <tr>
+            <td>Error</td>
+            <td><div class="color-sample" style="background-color: #f5222d;"></div> #f5222d</td>
+            <td><div class="color-sample" style="background-color: #f5222d;"></div> #f5222d</td>
+            <td>Errors, destructive actions</td>
+        </tr>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- Components -->
+    <h1>3. Components</h1>
+
+    <h2>3.1 Data Display Components</h2>
+
+    <h3>3.1.1 Accordion</h3>
+    <p>The Accordion component is used to show collapsible content panels.</p>
+    <div class="code-block">
+<Accordion 
+  items={[
+    { 
+      id: 'item-1', 
+      title: 'What is this design system?', 
+      content: 'Content for section 1' 
+    },
+    { 
+      id: 'item-2', 
+      title: 'How to use these components?', 
+      content: 'Content for section 2' 
+    }
+  ]} 
+/></div>
+
+    <p><strong>Props:</strong></p>
+    <ul>
+        <li><code>items</code>: Array of accordion items</li>
+        <li><code>allowMultiple</code>: Whether multiple items can be open at once</li>
+        <li><code>className</code>: Additional CSS class names</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h3>3.1.2 Badge</h3>
+    <p>The Badge component is used to highlight and categorize items or show counts.</p>
+    <div class="code-block">
+<Badge variant="primary">Primary</Badge>
+<Badge variant="success" withDot>Active</Badge>
+<Badge variant="error" pill>42</Badge></div>
+
+    <p><strong>Props:</strong></p>
+    <ul>
+        <li><code>variant</code>: The visual style of the badge</li>
+        <li><code>size</code>: The size of the badge</li>
+        <li><code>withDot</code>: Show a dot indicator before the content</li>
+        <li><code>pill</code>: Make badge pill shaped (more rounded)</li>
+        <li><code>outline</code>: Make badge outline style</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h2>3.2 Navigation Components</h2>
+
+    <h3>3.2.1 Breadcrumbs</h3>
+    <p>The Breadcrumbs component shows the current location within the app hierarchy.</p>
+    <div class="code-block">
+<Breadcrumbs 
+  items={[
+    { label: 'Home', href: '#' },
+    { label: 'Products', href: '#' },
+    { label: 'Current Page', active: true }
+  ]} 
+/></div>
+
+    <p><strong>Props:</strong></p>
+    <ul>
+        <li><code>items</code>: Array of breadcrumb items</li>
+        <li><code>separator</code>: Custom separator between items</li>
+        <li><code>maxItems</code>: Maximum items to show before collapsing</li>
+        <li><code>onItemClick</code>: Function to handle item click</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h3>3.2.2 Tabs</h3>
+    <p>The Tabs component is used to organize content into separate views.</p>
+    <div class="code-block">
+<Tabs
+  tabs={[
+    {
+      id: 'tab1',
+      label: 'Tab 1',
+      content: <div>Content for Tab 1</div>
+    },
+    {
+      id: 'tab2',
+      label: 'Tab 2',
+      content: <div>Content for Tab 2</div>
+    }
+  ]}
+/></div>
+
+    <p><strong>Props:</strong></p>
+    <ul>
+        <li><code>tabs</code>: Array of tab items</li>
+        <li><code>defaultActiveTab</code>: ID of the tab that should be active by default</li>
+        <li><code>onChange</code>: Function to call when the active tab changes</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h2>3.3 UI Components</h2>
+
+    <h3>3.3.1 Button</h3>
+    <p>The Button component is used for user interactions.</p>
+    <div class="code-block">
+<Button variant="primary">Primary</Button>
+<Button variant="secondary" size="lg">Secondary</Button>
+<Button variant="outline" disabled>Disabled</Button></div>
+
+    <p><strong>Props:</strong></p>
+    <ul>
+        <li><code>variant</code>: The visual style of the button</li>
+        <li><code>size</code>: The size of the button</li>
+        <li><code>fullWidth</code>: Make the button full width</li>
+        <li><code>disabled</code>: Disable the button</li>
+        <li><code>loading</code>: Show a loading indicator</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h3>3.3.2 ThemeToggle</h3>
+    <p>The ThemeToggle component is used to switch between light and dark modes.</p>
+    <div class="code-block">
+<ThemeToggle /></div>
+
+    <p><strong>Props:</strong></p>
+    <ul>
+        <li><code>className</code>: Additional CSS class names</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <!-- Theming -->
+    <h1>4. Theming</h1>
+    <p>The design system supports both light and dark themes through TailwindCSS. The theme can be toggled using the <code>ThemeToggle</code> component.</p>
+
+    <p>All colors are defined as CSS variables in the <code>:root</code> and <code>.dark</code> selectors, making it easy to customize the entire system by changing these variables.</p>
+
+    <div class="code-block">
+:root {
+  --primary-500: #1890ff;
+  --background-primary: #ffffff;
+  --text-primary: #111827;
+  /* other variables */
+}
+
+.dark {
+  --primary-500: #1890ff;
+  --background-primary: #121212;
+  --text-primary: #f4f4f5;
+  /* other variables */
+}</div>
+
+    <div class="warning-box">
+        <strong>Important:</strong> When customizing theme colors, ensure they maintain sufficient contrast ratios to meet accessibility standards.
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- Accessibility -->
+    <h1>5. Accessibility</h1>
+    <p>All components are built with accessibility in mind:</p>
+
+    <ul>
+        <li><strong>Proper ARIA attributes and roles</strong>: Each component includes appropriate ARIA attributes to ensure screen readers can properly interpret the interface.</li>
+        <li><strong>Keyboard navigation support</strong>: All interactive elements are navigable using the keyboard, with visible focus indicators.</li>
+        <li><strong>Sufficient color contrast</strong>: Text and interactive elements have sufficient contrast against their backgrounds to meet WCAG guidelines.</li>
+        <li><strong>Focus management</strong>: Interactive components manage focus appropriately, especially in components like modal dialogs.</li>
+        <li><strong>Screen reader friendly</strong>: Components are designed to work with popular screen readers.</li>
+    </ul>
+
+    <p>Example of accessible button implementation:</p>
+    <div class="code-block">
+<button
+  className="..."
+  disabled={disabled || loading}
+  aria-disabled={disabled || loading}
+  {...props}
+>
+  {loading && (
+    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-current" 
+      aria-hidden="true">
+      {/* SVG content */}
+    </svg>
+  )}
+  <span>{children}</span>
+</button></div>
+
+    <div class="page-break"></div>
+
+    <!-- Best Practices -->
+    <h1>6. Best Practices</h1>
+
+    <h2>Component Selection</h2>
+    <ul>
+        <li>Use the appropriate component for the task</li>
+        <li>Maintain consistent usage patterns across your application</li>
+        <li>Consider the user's mental model when selecting components</li>
+    </ul>
+
+    <h2>Design Principles</h2>
+    <ul>
+        <li>Keep interfaces simple and intuitive</li>
+        <li>Use clear and concise language</li>
+        <li>Provide feedback for user actions</li>
+        <li>Design for accessibility from the start</li>
+        <li>Ensure responsive design for all screen sizes</li>
+    </ul>
+
+    <div class="note-box">
+        <strong>Tip:</strong> Always test your components in both light and dark modes to ensure they maintain proper contrast and visibility in all contexts.
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        Copyright © 2024 Design System. All rights reserved.
+    </div>
+</body>
+</html> 
