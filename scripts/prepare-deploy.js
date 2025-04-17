@@ -22,6 +22,9 @@ if (!fs.existsSync(targetDir)) {
 // Copy storybook files to the dist/storybook directory
 copyDirRecursively(storybookBuildDir, targetDir);
 
+// Fix path issues in Storybook HTML files
+fixStorybookPaths(targetDir);
+
 // Modify the main index.html to add a link to Storybook
 if (fs.existsSync(mainIndexPath)) {
   let mainIndexContent = fs.readFileSync(mainIndexPath, 'utf8');
@@ -48,6 +51,48 @@ if (fs.existsSync(mainIndexPath)) {
 }
 
 console.log('✅ Storybook files copied to dist/storybook');
+
+/**
+ * Fix paths in Storybook HTML files
+ */
+function fixStorybookPaths(dir) {
+  const htmlFiles = findFiles(dir, '.html');
+  
+  for (const htmlFile of htmlFiles) {
+    let content = fs.readFileSync(htmlFile, 'utf8');
+    
+    // Replace absolute paths with relative paths
+    content = content.replace(/\/assets\//g, './assets/');
+    
+    // Fix import map paths
+    content = content.replace(/"\/[^"]*\/assets\//g, '"./assets/');
+    
+    fs.writeFileSync(htmlFile, content);
+  }
+  
+  console.log('✅ Fixed paths in Storybook HTML files');
+}
+
+/**
+ * Find files with a specific extension
+ */
+function findFiles(dir, extension) {
+  const result = [];
+  const files = fs.readdirSync(dir);
+  
+  for (const file of files) {
+    const filePath = join(dir, file);
+    const stat = fs.statSync(filePath);
+    
+    if (stat.isDirectory()) {
+      result.push(...findFiles(filePath, extension));
+    } else if (file.endsWith(extension)) {
+      result.push(filePath);
+    }
+  }
+  
+  return result;
+}
 
 /**
  * Recursively copy a directory

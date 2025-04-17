@@ -18,6 +18,11 @@ const config: StorybookConfig = {
   "framework": {
     "name": "@storybook/react-vite",
     "options": {}
+  },
+  "viteFinal": async (config) => {
+    // Use relative paths for GitHub Pages
+    config.base = './';
+    return config;
   }
 };
 export default config;
