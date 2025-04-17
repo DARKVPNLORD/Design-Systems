@@ -39753,8 +39753,8 @@ var BO = /* @__PURE__ */ a((e) => ({ v: 5, entries: Object.entries(e).reduce(
 
 // src/manager-api/modules/refs.ts
 var { location: Spe, fetch: $O } = z, uE = /* @__PURE__ */ a((e, t) => {
-  let { origin: r, pathname: n } = Spe, { origin: o, pathname: i } = new URL(e), s = `${r + n}`.replace("/iframe.html", "").replace(/\/$/, ""),
-  l = `${o + i}`.replace("/iframe.html", "").replace(/\/$/, "");
+  let { origin: r, pathname: n } = Spe, { origin: o, pathname: i } = new URL(e), s = `${r + n}`.replace("./iframe.html", "").replace(/\/$/, ""),
+  l = `${o + i}`.replace("./iframe.html", "").replace(/\/$/, "");
   return s === l ? ["local", l] : t || e ? ["external", l] : [null, null];
 }, "getSourceType"), UO = /* @__PURE__ */ a((e, t) => ({ ...t, kind: t.kind.replace("|", "/") }), "defaultStoryMapper"), jO = /* @__PURE__ */ a(
 (e, t) => Object.entries(e).reduce((r, [n, o]) => ({ ...r, [n]: { ...o, refId: t.id } }), {}), "addRefIds");

@@ -4214,9 +4214,9 @@ var Km = /* @__PURE__ */ a((e, t) => e && t[e] ? `storybook-ref-${e}` : "storybo
     ...u && { version: u },
     viewMode: o
   })), g.forEach((h) => {
-    let y = `storybook-ref-${h.id}`, f = d[y]?.split("/iframe.html")[0];
+    let y = `storybook-ref-${h.id}`, f = d[y]?.split("./iframe.html")[0];
     if (!f || h.url !== f) {
-      let b = `${h.url}/iframe.html?id=${l}&viewMode=${o}&refId=${h.id}${c}`;
+      let b = `${h.url}./iframe.html?id=${l}&viewMode=${o}&refId=${h.id}${c}`;
       d[y] = b;
     }
   }), /* @__PURE__ */ s.createElement(_e, null, /* @__PURE__ */ s.createElement(Ut, { styles: Gm }), /* @__PURE__ */ s.createElement(he, { filter: Um },
@@ -4258,7 +4258,7 @@ var { PREVIEW_URL: Jm, document: eh } = se, th = /* @__PURE__ */ a(({ state: e }
   let { storyId: t, refId: o, refs: i } = e, { location: n } = eh, r = i[o], l = `${n.origin}${n.pathname}`;
   return l.endsWith("/") || (l += "/"), {
     refId: o,
-    baseUrl: r ? `${r.url}/iframe.html` : Jm || `${l}iframe.html`,
+    baseUrl: r ? `${r.url}./iframe.html` : Jm || `${l}iframe.html`,
     storyId: t,
     queryParams: e.customQueryParams
   };
@@ -4284,7 +4284,7 @@ var { PREVIEW_URL: oh } = se, rh = /* @__PURE__ */ a(({ state: e }) => {
   let { storyId: t, refId: o, refs: i } = e, n = i[o];
   return {
     refId: o,
-    baseUrl: n ? `${n.url}/iframe.html` : oh || "iframe.html",
+    baseUrl: n ? `${n.url}./iframe.html` : oh || "../iframe.html",
     storyId: t,
     queryParams: e.customQueryParams
   };
@@ -4778,7 +4778,7 @@ var bh = [lu()], vh = [pu, ql, Xl], xh = [zl, Jl, Yl, Gl], Sh = [], Ih = (0, yo.
     viewMode: u,
     refs: l,
     storyId: r,
-    baseUrl: Th || "iframe.html",
+    baseUrl: Th || "../iframe.html",
     queryParams: n,
     tools: I,
     toolsExtra: _,
@@ -11071,7 +11071,7 @@ var st = "storybook_internal", $b = x.nav(({ theme: e }) => ({
         status: i,
         title: null,
         id: st,
-        url: "iframe.html"
+        url: "../iframe.html"
       },
       ...n
     }),
