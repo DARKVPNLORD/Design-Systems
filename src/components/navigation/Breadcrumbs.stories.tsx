@@ -151,6 +151,39 @@ export const Responsive: Story = {
   )
 };
 
+// Dark mode preview
+export const DarkModePreview: Story = {
+  args: {
+    items: [
+      { label: 'Home', href: '#' },
+      { label: 'Products', href: '#' },
+      { label: 'Category', href: '#' },
+      { label: 'Current Page', active: true }
+    ]
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Preview of the Breadcrumbs component in dark mode, showing how it adapts to dark themes.'
+      }
+    }
+  },
+  render: (args) => (
+    <div className="grid grid-cols-1 gap-6">
+      <div className="p-6 bg-white rounded-lg">
+        <h3 className="text-base font-medium mb-3">Light Mode</h3>
+        <Breadcrumbs {...args} />
+      </div>
+      <div className="p-6 bg-gray-900 rounded-lg">
+        <h3 className="text-base font-medium mb-3 text-white">Dark Mode</h3>
+        <div className="dark">
+          <Breadcrumbs {...args} />
+        </div>
+      </div>
+    </div>
+  )
+};
+
 // Accessibility example
 export const AccessibilityExample: Story = {
   parameters: {

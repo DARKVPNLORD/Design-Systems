@@ -55,4 +55,32 @@ export const AllowMultiple: Story = {
     items: sampleItems,
     allowMultiple: true,
   },
+};
+
+// Dark mode preview
+export const DarkModePreview: Story = {
+  args: {
+    items: sampleItems,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Preview of the Accordion component in dark mode, showing how it adapts to dark themes.'
+      }
+    }
+  },
+  render: () => (
+    <div className="grid grid-cols-1 gap-6">
+      <div className="p-6 bg-white rounded-lg">
+        <h3 className="text-base font-medium mb-3">Light Mode</h3>
+        <Accordion items={sampleItems} />
+      </div>
+      <div className="p-6 bg-gray-900 rounded-lg">
+        <h3 className="text-base font-medium mb-3 text-white">Dark Mode</h3>
+        <div className="dark">
+          <Accordion items={sampleItems} />
+        </div>
+      </div>
+    </div>
+  )
 }; 

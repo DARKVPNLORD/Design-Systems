@@ -26,8 +26,8 @@ const sampleTabs = [
     label: 'Account',
     content: (
       <div className="p-4">
-        <h3 className="text-lg font-medium text-gray-900">Account Settings</h3>
-        <p className="mt-2 text-sm text-gray-500">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">Account Settings</h3>
+        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
           Manage your account settings and preferences.
         </p>
       </div>
@@ -38,8 +38,8 @@ const sampleTabs = [
     label: 'Password',
     content: (
       <div className="p-4">
-        <h3 className="text-lg font-medium text-gray-900">Password</h3>
-        <p className="mt-2 text-sm text-gray-500">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">Password</h3>
+        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
           Change your password and security settings.
         </p>
       </div>
@@ -50,8 +50,8 @@ const sampleTabs = [
     label: 'Notifications',
     content: (
       <div className="p-4">
-        <h3 className="text-lg font-medium text-gray-900">Notifications</h3>
-        <p className="mt-2 text-sm text-gray-500">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">Notifications</h3>
+        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
           Configure how you receive notifications.
         </p>
       </div>
@@ -77,4 +77,33 @@ export const Vertical: Story = {
     tabs: sampleTabs,
     orientation: 'vertical',
   },
+};
+
+// Dark mode preview
+export const DarkModePreview: Story = {
+  args: {
+    tabs: sampleTabs,
+    orientation: 'horizontal',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Preview of the Tabs component in dark mode, showing how it adapts to dark themes.'
+      }
+    }
+  },
+  render: (args) => (
+    <div className="grid grid-cols-1 gap-6">
+      <div className="p-6 bg-white rounded-lg">
+        <h3 className="text-base font-medium mb-3">Light Mode</h3>
+        <Tabs {...args} />
+      </div>
+      <div className="p-6 bg-gray-900 rounded-lg">
+        <h3 className="text-base font-medium mb-3 text-white">Dark Mode</h3>
+        <div className="dark">
+          <Tabs {...args} />
+        </div>
+      </div>
+    </div>
+  )
 }; 
