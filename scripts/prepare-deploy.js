@@ -2,7 +2,7 @@
  * Script to prepare the deployment by copying Storybook build to the dist folder
  */
 import fs from 'fs';
-import { join, dirname } from 'path';
+import path, { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -17,6 +17,17 @@ const mainIndexPath = join(rootDir, 'dist', 'index.html');
 // Create the target directory if it doesn't exist
 if (!fs.existsSync(targetDir)) {
   fs.mkdirSync(targetDir, { recursive: true });
+}
+
+// Copy .nojekyll file to dist
+const nojekyllPath = join(rootDir, '.nojekyll');
+if (fs.existsSync(nojekyllPath)) {
+  fs.copyFileSync(nojekyllPath, join(rootDir, 'dist', '.nojekyll'));
+  console.log('✅ Copied .nojekyll to dist folder');
+} else {
+  // Create .nojekyll file in dist if it doesn't exist
+  fs.writeFileSync(join(rootDir, 'dist', '.nojekyll'), '');
+  console.log('✅ Created .nojekyll in dist folder');
 }
 
 // Copy storybook files to the dist/storybook directory
@@ -57,7 +68,9 @@ console.log('✅ Storybook files copied to dist/storybook');
  */
 function fixStorybookPaths(dir) {
   const htmlFiles = findFiles(dir, '.html');
+  const jsFiles = findFiles(dir, '.js');
   
+  // Fix HTML files
   for (const htmlFile of htmlFiles) {
     let content = fs.readFileSync(htmlFile, 'utf8');
     
@@ -67,10 +80,30 @@ function fixStorybookPaths(dir) {
     // Fix import map paths
     content = content.replace(/"\/[^"]*\/assets\//g, '"./assets/');
     
+    // Fix module paths
+    content = content.replace(/from "\/[^"]*\/assets\//g, 'from "./assets/');
+    
+    // Fix fetch paths
+    content = content.replace(/fetch\("\/[^"]*\/assets\//g, 'fetch("./assets/');
+    
     fs.writeFileSync(htmlFile, content);
   }
   
-  console.log('✅ Fixed paths in Storybook HTML files');
+  // Fix JavaScript files
+  for (const jsFile of jsFiles) {
+    let content = fs.readFileSync(jsFile, 'utf8');
+    
+    // Fix import paths in JS files
+    content = content.replace(/from "\/[^"]*\/assets\//g, 'from "./assets/');
+    content = content.replace(/import\("\/[^"]*\/assets\//g, 'import("./assets/');
+    
+    // Fix fetch paths
+    content = content.replace(/fetch\("\/[^"]*\/assets\//g, 'fetch("./assets/');
+    
+    fs.writeFileSync(jsFile, content);
+  }
+  
+  console.log('✅ Fixed paths in Storybook files');
 }
 
 /**

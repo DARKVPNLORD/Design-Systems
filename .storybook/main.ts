@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+import { mergeConfig } from 'vite';
 
 const config: StorybookConfig = {
   "stories": [
@@ -20,9 +21,21 @@ const config: StorybookConfig = {
     "options": {}
   },
   "viteFinal": async (config) => {
-    // Use relative paths for GitHub Pages
-    config.base = './';
-    return config;
+    // Merge custom configuration
+    return mergeConfig(config, {
+      base: './',
+      build: {
+        outDir: 'storybook-static',
+        rollupOptions: {
+          output: {
+            // Ensure relative paths in the build
+            entryFileNames: 'assets/[name]-[hash].js',
+            chunkFileNames: 'assets/[name]-[hash].js',
+            assetFileNames: 'assets/[name]-[hash].[ext]'
+          }
+        }
+      }
+    });
   }
 };
 export default config;
