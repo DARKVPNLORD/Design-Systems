@@ -33,6 +33,11 @@ export default function App() {
   const openStorybook = () => {
     window.open('http://localhost:6006', '_blank');
   };
+  
+  // Opens GitHub repository in a new tab
+  const openGitHub = () => {
+    window.open('https://github.com/DARKVPNLORD/Design-Systems', '_blank');
+  };
 
   // Tab content for the component showcase
   const tabItems = [
@@ -76,6 +81,7 @@ export default function App() {
         </div>
       ),
     },
+    // Other tabs - badges, accordions, breadcrumbs
     {
       id: 'tab2',
       label: 'Buttons',
@@ -112,7 +118,6 @@ export default function App() {
         </div>
       ),
     },
-    // Other tabs - badges, accordions, breadcrumbs
     {
       id: 'tab3',
       label: 'Badges',
@@ -221,7 +226,14 @@ export default function App() {
             A comprehensive collection of reusable components for enterprise B2B applications
           </p>
           <div className="mt-6 flex justify-center">
-            <Button variant="primary" size="lg" className="mr-4">Get Started</Button>
+            <Button 
+              variant="primary" 
+              size="lg" 
+              className="mr-4"
+              onClick={openGitHub}
+            >
+              Get Started
+            </Button>
             <Button 
               variant="outline" 
               size="lg" 
@@ -244,7 +256,13 @@ export default function App() {
         <footer className="mt-16 py-6 text-center text-text-tertiary text-sm">
           <p>© 2025 Design System. All rights reserved.</p>
           <div className="mt-4 flex justify-center space-x-4">
-            <Button variant="ghost" size="sm">GitHub</Button>
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={openGitHub}
+            >
+              GitHub
+            </Button>
             <Button 
               variant="ghost" 
               size="sm"
