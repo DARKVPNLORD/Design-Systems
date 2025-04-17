@@ -83,4 +83,4 @@ export const DarkModePreview: Story = {
       </div>
     </div>
   )
-}; 
+};
