@@ -36,6 +36,18 @@ copyDirRecursively(storybookBuildDir, targetDir);
 // Fix path issues in Storybook HTML files
 fixStorybookPaths(targetDir);
 
+// Special fix for iframe.html issue - copy it to the assets directory where it's being looked for
+const iframeHtmlPath = join(targetDir, 'iframe.html');
+const assetsDir = join(targetDir, 'assets');
+if (!fs.existsSync(assetsDir)) {
+  fs.mkdirSync(assetsDir, { recursive: true });
+}
+
+if (fs.existsSync(iframeHtmlPath)) {
+  fs.copyFileSync(iframeHtmlPath, join(assetsDir, 'iframe.html'));
+  console.log('✅ Copied iframe.html to assets directory as a fallback');
+}
+
 // Modify the main index.html to add a link to Storybook
 if (fs.existsSync(mainIndexPath)) {
   let mainIndexContent = fs.readFileSync(mainIndexPath, 'utf8');
@@ -86,6 +98,13 @@ function fixStorybookPaths(dir) {
     // Fix fetch paths
     content = content.replace(/fetch\("\/[^"]*\/assets\//g, 'fetch("./assets/');
     
+    // Fix iframe references
+    content = content.replace(/"iframe\.html"/g, '"./iframe.html"');
+    content = content.replace(/"\.\/iframe\.html"/g, '"./iframe.html"');
+
+    // Additional iframe.html fixes for different path patterns
+    content = content.replace(/src="[^"]*iframe\.html"/g, 'src="./iframe.html"');
+    
     fs.writeFileSync(htmlFile, content);
   }
   
@@ -99,6 +118,11 @@ function fixStorybookPaths(dir) {
     
     // Fix fetch paths
     content = content.replace(/fetch\("\/[^"]*\/assets\//g, 'fetch("./assets/');
+    
+    // Fix iframe references
+    content = content.replace(/"iframe\.html"/g, '"./iframe.html"');
+    content = content.replace(/"\.\/iframe\.html"/g, '"./iframe.html"');
+    content = content.replace(/\/iframe\.html/g, './iframe.html');
     
     fs.writeFileSync(jsFile, content);
   }
